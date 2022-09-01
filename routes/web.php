@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -15,21 +16,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-//     try {
-//         $dbc = new PDO('mysql:host='.env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'));
-//         $charset = config('database.connections.mysql.charset');
-//         $collation = config('database.connections.mysql.collation');
-//         $query = "CREATE DATABASE IF NOT EXISTS ". env('DB_DATABASE') . " CHARACTER SET $charset COLLATE $collation;";
-//         $dbc->exec($query);
-//     } catch (PDOException $e) {
-//         echo $e->getMessage();
-//     }
+      // $pdo = DB::connection(/*'sqlite'*/)->getPdo();
+      // $users = $pdo->query('select * from users')->fetchAll();
+      // dump($users);
 
-    $user = DB::select('select * from users where id = ?', [1]);
-    $users = DB::connection('sqlite')->select('select * from users');
+     // $result = DB::select('select * from users where id = ? and name = ?', [1, 'Adalberto Gerlach']);
+     // $result = DB::select('select * from users where id = :id', ['id' => 1]);
 
-    dump("mysql:", $user);
-    dump("sqlite:", $users);
+     // DB::insert('insert into users (name, email,password) values (?, ?, ?)', ['Inserted Name', 'email@fdf.fd','passw']);
+
+     // $affected = DB::update('update users set email = "updatedemail@email.com" where email = ?', ['email@fdf.fd']);
+
+     // $deleted = DB::delete('delete from users where id = ?',[4]);
+
+    // DB::statement('truncate table users');
+
+     // $result = DB::select('select * from users');
+     // $result = DB::table('users')->select()->get();
+    $result = User::all();
+
+    dump($result);
+
 
     return view('welcome');
 });
