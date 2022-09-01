@@ -16,25 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-//    $result = DB::table('users')->select()->get();
+    $users = DB::table('users')->get();
+    $comments = DB::table('comments')->get();
 
-    DB::transaction(function () {
-        // try catch block is not necessary as well as DB::rollBack();
-        try {
-            DB::table('users')->delete();
-            $result = DB::table('users')->where('id',4)->update(['email' => 'none']);
-            if(!$result)
-            {
-                throw new \Exception;
-            }
-        } catch(\Exception $e) {
-            DB::rollBack();
-        }
-
-    }, 5); // optional third argument, how many times a transaction should be reattempted
-
-    $result = DB::table('users')->select()->get();
-    dump($result);
+    dump($users, $comments);
 
     return view('welcome');
 });
