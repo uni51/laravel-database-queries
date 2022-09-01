@@ -19,6 +19,7 @@ Route::get('/', function () {
     $users = DB::table('users')->get();
     $comments = DB::table('comments')->get();
 
+
     dump($users, $comments);
 
     return view('welcome');
