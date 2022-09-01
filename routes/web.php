@@ -16,27 +16,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-      // $pdo = DB::connection(/*'sqlite'*/)->getPdo();
-      // $users = $pdo->query('select * from users')->fetchAll();
-      // dump($users);
+//    $result = DB::table('users')->select()->get();
 
-     // $result = DB::select('select * from users where id = ? and name = ?', [1, 'Adalberto Gerlach']);
-     // $result = DB::select('select * from users where id = :id', ['id' => 1]);
+    DB::transaction(function () {
+        // try catch block is not necessary as well as DB::rollBack();
+        try {
+            DB::table('users')->delete();
+            $result = DB::table('users')->where('id',4)->update(['email' => 'none']);
+            if(!$result)
+            {
+                throw new \Exception;
+            }
+        } catch(\Exception $e) {
+            DB::rollBack();
+        }
 
-     // DB::insert('insert into users (name, email,password) values (?, ?, ?)', ['Inserted Name', 'email@fdf.fd','passw']);
+    }, 5); // optional third argument, how many times a transaction should be reattempted
 
-     // $affected = DB::update('update users set email = "updatedemail@email.com" where email = ?', ['email@fdf.fd']);
-
-     // $deleted = DB::delete('delete from users where id = ?',[4]);
-
-    // DB::statement('truncate table users');
-
-     // $result = DB::select('select * from users');
-     // $result = DB::table('users')->select()->get();
-    $result = User::all();
-
+    $result = DB::table('users')->select()->get();
     dump($result);
-
 
     return view('welcome');
 });
