@@ -16,11 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $users = DB::table('users')->get();
-    $comments = DB::table('comments')->get();
+    // $users = DB::table('users')->get();
+    // $users = DB::table('users')->pluck('email');
+    // $user = DB::table('users')->where('name', 'Hailee Hyatt')->first();
+    // $user = DB::table('users')->where('name', 'Hailee Hyatt')->value('email');
+    // $user = DB::table('users')->find(1);
 
+    // $comments= DB::table('comments')->select('content as comment_content')->get();
+    // $comments= DB::table('comments')->select('user_id')->distinct()->get();
 
-    dump($users, $comments);
+    // $result = DB::table('comments')->count();
+    $result = DB::table('comments')->where('content', 'content')->doesntExist();
+
+    dump($result);
 
     return view('welcome');
 });
