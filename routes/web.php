@@ -16,17 +16,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // $users = DB::table('users')->get();
-    // $users = DB::table('users')->pluck('email');
-    // $user = DB::table('users')->where('name', 'Hailee Hyatt')->first();
-    // $user = DB::table('users')->where('name', 'Hailee Hyatt')->value('email');
-    // $user = DB::table('users')->find(1);
 
-    // $comments= DB::table('comments')->select('content as comment_content')->get();
-    // $comments= DB::table('comments')->select('user_id')->distinct()->get();
+    // $result = DB::table('rooms')->get();
+    // $result = DB::table('rooms')->where('price','<',200)->get(); // = like, etc.
 
-    // $result = DB::table('comments')->count();
-    $result = DB::table('comments')->where('content', 'content')->doesntExist();
+//     $result = DB::table('rooms')->where([
+//         ['room_size', '2'],
+//         ['price', '<', '400'],
+//     ])->get();
+
+//      $result = DB::table('rooms')
+//         ->where('room_size' ,'2')
+//         ->orWhere('price', '<' ,'400')
+//         ->get();
+
+    $result = DB::table('rooms')
+        ->where('price', '<' ,'300')
+        ->orWhere(function($query) {
+            $query->where('room_size', '>' ,'1')
+                ->where('room_size', '<' ,'4');
+        })
+        ->get();
+
 
     dump($result);
 

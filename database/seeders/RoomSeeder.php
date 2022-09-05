@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Comment;
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 
-class CommentSeeder extends Seeder
+class RoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        Comment::factory()->count(10)->create();
+        Room::factory()->count(10)->create();
     }
 }
